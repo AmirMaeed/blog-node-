@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Email to Multiple Users</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        form { max-width: 400px; margin: auto; }
+        input, textarea, button { width: 100%; padding: 10px; margin-top: 10px; }
+        label { display: block; margin: 5px 0; }
+    </style>
+</head>
+<body>
+
+    <h2>Select Users to Send Email</h2>
+    <form action="/send-email" method="POST">
+        <% if (users && users.length > 0) { %>
+            <% users.forEach(user => { %> 
+        <label><input type="checkbox" name="emails" value="<%= user.email %>"> <%= user.email %></label>
+    
+        <% }); %>
+                <% } else { %>
+                  <p>No blog posts available.</p>
+                <% } %>
+
+        <label for="subject">Subject:</label>
+        <input type="text" id="subject" name="subject" required>
+
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" rows="4" required></textarea>
+
+        <button type="submit">Send Email</button>
+    </form>
+
+</body>
+</html>

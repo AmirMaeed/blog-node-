@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/header') %>
+
+    <body>
+
+        <%- include('../partials/navbar') %>
+
+            <div class="page-heading header-text">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1>Write new Blog</h1>
+                            <span>Here you can post new blog</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="container mt-5 mb-4">
+                <div class="row justify-content-center">
+                    <div class="col-md-8 col-lg-6">
+                        <h2 class="text-center">Add a New Post</h2>
+                        <form action="/" method="POST" enctype="multipart/form-data">
+                            <div class="mb-3">
+                                <label for="title" class="form-label">Title</label>
+                                <input type="text" class="form-control" id="title" name="title" required>
+                            </div>
+                            <div class="mb-3 ">
+                                <label for="image" class="form-label">Image</label>
+                                <input type="file" class="form-control " id="image" name="image" required
+                                    style="height: 45px;">
+                            </div>
+                            <div class="mb-3">
+                                <label for="content" class="form-label">Content</label>
+                                <textarea class="form-control" id="content" name="content" rows="5" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <%- include('../partials/footer') %>
+                <%- include('../partials/script') %>
+
+
+
+    </body>
+
+</html>
+
+
+
+
+

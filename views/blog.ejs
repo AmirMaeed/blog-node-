@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+  <meta name="viewport" inputmode="">
+  
+  <style>
+    /* Pagination Container */
+    .pagination-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 30px;
+    }
+
+    /* Pagination List */
+    .pagination {
+        display: flex;
+        list-style: none;
+        padding: 10px 15px;
+        /* background: linear-gradient(135deg, #ff7eb3, #ff758c); */
+        border-radius: 50px;
+        /* box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2); */
+    }
+
+    /* Pagination Buttons */
+    .pagination li {
+        margin: 0 5px;
+    }
+
+    .pagination a, .pagination span {
+        text-decoration: none;
+        color: #faf9f9;
+        padding: 12px 18px;
+        background:#ff8e32 ;
+        border-radius: 50%;
+        font-weight: bold;
+        transition: 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    /* Hover Effect */
+    .pagination a:hover {
+        background: rgb(248, 173, 10);
+        transform: scale(1.1);
+        
+    }
+
+    /* Active Page */
+    .pagination .active {
+        background: #f3750d;
+        color:white;
+        font-weight: bold;
+        border-radius: 50%;
+        transform: scale(1.2);
+        box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Disabled Buttons */
+    .pagination .disabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 600px) {
+        .pagination a, .pagination span {
+            padding: 8px 12px;
+            font-size: 14px;
+        }
+    }
+</style>
+ <!-- ***** Preloader Start ***** -->
+<div id="preloader">
+  <div class="jumper">
+      <div></div>
+      <div></div>
+      <div></div>
+  </div>
+</div>  
+<%- include("partials/header") %>
+
+<%- include("partials/navbar") %>
+
+    <!-- Page Content -->
+    <div class="page-heading header-text">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h1>Read our Blog</h1>
+            <span>Lorem ipsum dolor sit amet consectetur</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="single-services">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8">
+            <section class='tabs-content'>
+              <% if (posts && posts.length > 0) { %>
+              <% posts.forEach(post => { %> 
+                <article id='tabs-1'>
+                  <img src="/uploads/<%= post.image %> " loading="lazy" alt="">
+                  <h4><a href="/blog/<%= post._id %>"><%= post.title %></a></h4>
+                  <div style="margin-bottom:10px;">
+                    <span>John Doe &nbsp;|&nbsp; <%= post.createdAt %> &nbsp;|&nbsp; 15 comments</span>
+                  </div>
+                  <p><pre><%= post.content.substring(0, 50) %>....</pre></p>
+                  <br>
+                  <div>
+                    <a href="/blog/<%= post._id %>" class="filled-button">View</a>
+                            
+                
+                  </div>
+                </article>
+              <br>
+              <br>
+              <br>
+                <% }); %>
+                <% } else { %>
+                  <p>No blog posts available.</p>
+                <% } %>
+            
+            </section>
+            <!-- Beautiful Pagination -->
+           
+    <!-- Advanced Pagination with 5 Pages at a Time -->
+    <div class="pagination-container">
+      <ul class="pagination">
+          <% if (currentPage > 1) { %>
+              <li><a href="/blog?page=1&limit=<%= limit %>">«</a></li> <!-- First Page -->
+              <li><a href="/blog?page=<%= currentPage - 1 %>&limit=<%= limit %>">‹</a></li> <!-- Previous -->
+          <% } else { %>
+              <li><span class="disabled">«</span></li>
+              <li><span class="disabled">‹</span></li>
+          <% } %>
+
+          <% 
+              let startPage = Math.max(1, currentPage - 2);
+              let endPage = Math.min(totalPages, startPage + 4);
+          %>
+
+          <% for (let i = startPage; i <= endPage; i++) { %>
+              <% if (i === currentPage) { %>
+                  <li><span class="active"><%= i %></span></li>
+              <% } else { %>
+                  <li><a href="/blog?page=<%= i %>&limit=<%= limit %>"><%= i %></a></li>
+              <% } %>
+          <% } %>
+
+          <% if (currentPage < totalPages) { %>
+              <li><a href="/blog?page=<%= currentPage + 1 %>&limit=<%= limit %>">›</a></li> <!-- Next -->
+              <li><a href="/blog?page=<%= totalPages %>&limit=<%= limit %>">»</a></li> <!-- Last Page -->
+          <% } else { %>
+              <li><span class="disabled">›</span></li>
+              <li><span class="disabled">»</span></li>
+          <% } %>
+      </ul>
+  </div>
+          </div>
+          
+
+          <div class="col-md-4">
+              <h4 class="h4">Search</h4>
+              
+              <form  id="search_form" name="gs" method="GET" action="/search">
+                <input type="text" name="search" width="100" class="form-control form-control-lg" placeholder="type to search..." autocomplete="on" value="<%= searchQuery %>">
+                <button type="submit"  class="btn btn-primary mt-2">Search</button>
+              </form>
+            
+              <br>
+              <br>
+
+              <h4 class="h4">Recent posts</h4>
+
+              <ul>
+
+                <% posts.forEach(post => { %> 
+
+                  <li>
+                      <h5 style="margin-bottom:10px;"><a href="/blog/<%= post._id  %>"><%= post.title.substring(0, 50) %>....</a></h5>
+                      <small><i class="fa fa-user"></i> John Doe &nbsp;|&nbsp; <i class="fa fa-calendar"></i> 27.07.2020 10:10</small>
+                  </li>
+
+                  <li><br></li>
+
+                  <% }); %>
+
+              </ul>
+
+             
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+    <br>  
+    <br>  
+    <br>  
+    <br>  
+
+
+
+     <%- include("partials/footer") %>
+    <!-- Bootstrap core JavaScript -->
+    <%- include("partials/script") %>
+
+  </body>
+</html>

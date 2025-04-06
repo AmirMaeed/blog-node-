@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    /* Pagination Container */
+    .pagination-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 30px;
+    }
+
+    /* Pagination List */
+    .pagination {
+        display: flex;
+        list-style: none;
+        padding: 10px 15px;
+        /* background: linear-gradient(135deg, #ff7eb3, #ff758c); */
+        border-radius: 50px;
+        /* box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2); */
+    }
+
+    /* Pagination Buttons */
+    .pagination li {
+        margin: 0 5px;
+    }
+
+    .pagination a,
+    .pagination span {
+        text-decoration: none;
+        color: #faf9f9;
+        padding: 12px 18px;
+        background: #ff8e32;
+        border-radius: 50%;
+        font-weight: bold;
+        transition: 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    /* Hover Effect */
+    .pagination a:hover {
+        background: rgb(248, 173, 10);
+        transform: scale(1.1);
+
+    }
+
+    /* Active Page */
+    .pagination .active {
+        background: #f3750d;
+        color: white;
+        font-weight: bold;
+        border-radius: 50%;
+        transform: scale(1.2);
+        box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Disabled Buttons */
+    .pagination .disabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 600px) {
+
+        .pagination a,
+        .pagination span {
+            padding: 8px 12px;
+            font-size: 14px;
+        }
+    }
+</style>
+<!-- ***** Preloader Start ***** -->
+<div id="preloader">
+    <div class="jumper">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</div>
+<%- include("partials/header") %>
+    <%- include("partials/navbar") %>
+
+        <!-- Page Content -->
+        <div class="page-heading header-text">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1>Read our Blog</h1>
+                        <span>Lorem ipsum dolor sit amet consectetur</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="single-services">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 ">
+                        <section class='tabs-content d-flex ' style="flex-wrap: wrap; justify-content: center;" >
+                            <% if (posts && posts.length> 0) { %>
+                                <% posts.forEach(post=> { %>
+                                    
+                                    <div class="card m-1" style="width: 20rem;" >
+                                        <img class="card-img-top" src="/uploads/<%= post.image %> " alt="Card image cap">
+                                        <div class="card-body">
+                                          <h5 class="card-title"><a href="/blog/<%= post._id %>"><%= post.title %></h5>
+                                          <p class="card-text"> <%= post.content.substring(0, 50) %>...</p>
+                                          <small>By <%= post.author %> | <%= post.createdAt.toDateString() %></small>
+                                          <a href="/blog/<%= post._id %>" class="btn btn-primary">Go somewhere</a>
+                                        </div>
+                                      </div>
+
+
+
+                                    <% }) %>
+                                        <% } else { %>
+                                            <p>No posts found for "<%= searchQuery %>".</p>
+                                            <% } %>
+
+                        </section>
+                        <!-- Beautiful Pagination -->
+
+                        <!-- Advanced Pagination with 5 Pages at a Time -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+       
+
+            
+
+        </div>
+
+        </div>
+        </div>
+        </div>
+
+        <br>
+        <br>
+        <br>
+        <br>
+
+
+
+        <%- include("partials/footer") %>
+            <!-- Bootstrap core JavaScript -->
+            <%- include("partials/script") %>
+
+                </body>
+
+</html>
